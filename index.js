@@ -1,5 +1,5 @@
 require('dotenv').config()
-const bch = require('bitcoincashjs')
+const dash = require('bitcoinjs-lib-dash')
 const RpcClient = require('bitcoind-rpc');
 var fromHash = function(hash, config) {
   let c;
@@ -8,10 +8,10 @@ var fromHash = function(hash, config) {
   } else {
     c = {
       protocol: 'http',
-      user: process.env.BITCOIN_USERNAME ? process.env.BITCOIN_USERNAME : 'root',
-      pass: process.env.BITCOIN_PASSWORD ? process.env.BITCOIN_PASSWORD : 'bitcoin',
-      host: process.env.BITCOIN_IP ? process.env.BITCOIN_IP : '127.0.0.1',
-      port: process.env.BITCOIN_PORT ? process.env.BITCOIN_PORT : '8332',
+      user: process.env.DASH_USERNAME ? process.env.DASH_USERNAME : 'root',
+      pass: process.env.DASH_PASSWORD ? process.env.DASH_PASSWORD : 'dash',
+      host: process.env.DASH_IP ? process.env.DASH_IP : '127.0.0.1',
+      port: process.env.DASH_PORT ? process.env.DASH_PORT : '9998',
     }
   }
   
@@ -29,7 +29,7 @@ var fromHash = function(hash, config) {
 }
 var fromTx = function(transaction, options) {
   return new Promise(function(resolve, reject) {
-    let gene = new bch.Transaction(transaction);
+    let gene = new dash.Transaction(transaction);
     let t = gene.toObject()
     let result = [];
     let inputs = [];
@@ -61,7 +61,7 @@ var fromTx = function(transaction, options) {
             h: input.prevTxId.toString('hex'),
             i: input.outputIndex
           }
-          let address = input.script.toAddress(bch.Networks.livenet).toString(bch.Address.CashAddrFormat).split(':')[1];
+          let address = input.script.toAddress(dash.Networks.livenet).toString(dash.Address.CashAddrFormat).split(':')[1];
           if (address && address.length > 0) {
             sender.a = address;
           }
@@ -97,7 +97,7 @@ var fromTx = function(transaction, options) {
             v: output.satoshis,
             i: output_index
           }
-          let address = output.script.toAddress(bch.Networks.livenet).toString(bch.Address.CashAddrFormat).split(':')[1];
+          let address = output.script.toAddress(dash.Networks.livenet).toString(dash.Address.CashAddrFormat).split(':')[1];
           if (address && address.length > 0) {
             receiver.a = address;
           }
