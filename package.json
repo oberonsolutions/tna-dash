@@ -6,8 +6,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@dashevo/dashcore-lib": "github:dashevo/dashcore-lib",
     "bitcoind-rpc": "^0.7.2",
-    "bitcoinjs-lib": "^4.0.2",
     "dotenv": "^6.0.0"
   }
 }
